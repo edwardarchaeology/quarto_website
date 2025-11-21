@@ -3,8 +3,6 @@ title: "About"
 body-classes: about-page
 ---
 
-[< Back](index.qmd){.about-back-link}
-
 <div class="about-container">
 
 <div class="about-layout">
