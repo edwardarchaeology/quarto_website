@@ -1,0 +1,86 @@
+---
+title: "Contact"
+body-classes: contact-page
+---
+
+::: {.contact-container}
+
+::: {.contact-header}
+
+## Contact
+
+Have a question or a project in mind? Let's map the path.
+
+- <i class="bi bi-envelope-fill"></i> [leland.data-consulting@gmail.com](mailto:leland.data.consulting@gmail.com)
+- <i class="bi bi-telephone-fill"></i> +1 (540) 397‑7663
+- <i class="bi bi-geo-alt-fill"></i> New Orleans, USA
+
+:::
+
+::: {.contact-form-card}
+
+### Have a question? Let’s map the path!
+
+<!-- Replace FORM_ID_HERE with your Formspree form ID so submissions email you -->
+```{=html}
+<form
+  action="https://formspree.io/f/FORM_ID_HERE"
+  method="POST"
+  class="contact-form"
+>
+  <div class="contact-row">
+    <div class="contact-field">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <div class="contact-field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+  </div>
+
+  <div class="contact-row">
+    <div class="contact-field">
+      <label for="company">Company</label>
+      <input type="text" id="company" name="company">
+    </div>
+    <div class="contact-field">
+      <label for="timeline">Timeline</label>
+      <select id="timeline" name="timeline">
+        <option value="">Select a timeline</option>
+        <option>ASAP (0–2 weeks)</option>
+        <option>Near‑term (3–6 weeks)</option>
+        <option>Later (6+ weeks)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="contact-row">
+    <div class="contact-field">
+      <label for="budget">Budget (optional)</label>
+      <select id="budget" name="budget">
+        <option value="">Select a budget</option>
+        <option>&lt;$5K</option>
+        <option>$5K–$15K</option>
+        <option>$15K–$40K</option>
+        <option>$40K+</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="contact-row">
+    <div class="contact-field full-width">
+      <label for="message">Tell me about your project</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-lilac contact-submit">
+    Submit
+  </button>
+</form>
+```
+
+:::
+
+:::

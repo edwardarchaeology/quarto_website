@@ -1,0 +1,30 @@
+---
+title: "Simple Spatial Shiny App"
+format:
+  html:
+    body-classes: project-page
+---
+
+## A minimal R Shiny app with spatial data
+
+This writeup describes a small R Shiny application used as a proof of concept for sharing geospatial data interactively without requiring users to install desktop GIS software.
+
+The app:
+
+- Scrapes current Waffle House locations from the public website.
+- Plots them on an interactive map.
+- Lets the user draw a synthetic disaster area with configurable radii.
+- Performs real‑time CRS transformations and distance calculations to render the impact zone correctly.
+
+![](../assets/project_images/Waffle.gif){.project-thumb}
+
+Despite its simplicity, the app demonstrates:
+
+- Reactive user input bound to spatial calculations.
+- Automated data refresh via web scraping.
+- How quickly an audience‑friendly, shareable GIS interface can be built with Shiny.
+
+Deployed version:
+
+<https://edwardarchaeology.shinyapps.io/app_testing/>
+

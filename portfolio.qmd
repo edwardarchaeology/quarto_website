@@ -1,0 +1,289 @@
+---
+title: "Portfolio"
+subtitle: "[Datacamp certifications/projects](https://www.datacamp.com/portfolio/edwardarchaeology)<br>[Selected presentations](project_writeups/presentations.qmd)"
+page-layout: full
+format:
+  html:
+    body-classes: portfolio-page
+---
+
+I build practical, end-to-end data and geospatial solutions – from scrapers and ETL pipelines, to interactive apps, dashboards, and research workflows. Below is a selection of projects, reorganized from my original portfolio into two groups: **Interactive apps & tools** and **Research & methods**.
+
+---
+
+<h2>Interactive apps &amp; tools</h2>
+
+<div class="portfolio-grid"
+     style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:2rem;margin-top:2rem;">
+
+<div class="project-card">
+
+![](assets/project_images/census_llm/census_llm.png){.project-thumb}
+
+**Tech:** Python · LLM · Agents · Docker  
+
+### Census LLM Agent
+
+An experimental large‑language‑model agent for exploring and querying U.S. Census data, combining natural‑language prompts with structured API calls. Containerized via Docker.
+
+[View code](https://github.com/edwardarchaeology/census-llm-agent){.btn .btn-primary .btn-sm}
+
+[LLM]{.badge} [Agents]{.badge} [Docker]{.badge} [Census]{.badge}
+
+</div>
+
+
+<div class="project-card">
+
+![](assets/project_images/coastline/coast.png){.project-thumb}
+
+**Tech:** Python · Shiny · Geospatial · Satellite Imagery  
+
+### Coastal Change Detection App
+
+An easy, hands-on way for anyonem not just GIS or remote-sensing expert, to explore how coastlines change over time.  
+
+[View app](https://ecleland-coastal-change-detection-app.share.connect.posit.cloud){.btn .btn-primary .btn-sm}
+
+[Python]{.badge} [Shiny]{.badge} [Environmental]{.badge} [Remote sensing]{.badge}
+
+</div>
+
+<div class="project-card">
+
+<video class="project-thumb" autoplay muted loop playsinline>
+  <source src="assets/project_videos/whi_app.mp4" type="video/mp4">
+</video>
+
+**Tech:** R · Shiny · Geospatial  
+
+### Waffle House Index Geospatial App
+
+A lightning-fast custom geospatial selection and export tool built on Waffle House locations as a proxy for storm impact and service resilience. Supports interactive filtering and one-click data export for planners.
+
+[View app](https://ecleland-waffle-house-index.share.connect.posit.cloud){.btn .btn-primary .btn-sm}
+
+[Shiny]{.badge} [Mapping]{.badge} [Public safety]{.badge}
+
+</div>
+
+<div class="project-card">
+
+![](assets/project_images/dwh_app.png){.project-thumb}
+
+**Tech:** R · Shiny · Remote sensing  
+
+### Deepwater Horizon Hexadecane App
+
+An interactive 3D geospatial app visualizing hexadecane concentrations from the Deepwater Horizon spill. Combines map-based exploration with histograms and temporal controls for scientific storytelling.
+
+[View app](https://edwardarchaeology.shinyapps.io/deepwater-hexadecane/){.btn .btn-primary .btn-sm}
+
+[Environmental]{.badge} [Remote sensing]{.badge} [Visualization]{.badge}
+
+</div>
+
+<div class="project-card">
+
+![](assets/project_images/git_rag.png){.project-thumb}
+
+**Tech:** Python · RAG · Local-first AI  
+
+### GitHub Repository RAG (CosmosDB + Ollama)
+
+A local-first Retrieval-Augmented Generation system that ingests large collections of GitHub repositories into Cosmos DB (emulator) and uses Ollama for embeddings and chat. Includes helpers to scrape, rank, and clone repos before ingest.
+
+[View code](https://github.com/edwardarchaeology/Repository-RAG){.btn .btn-primary .btn-sm}
+
+[RAG]{.badge} [Ollama]{.badge} [Azure Cosmos]{.badge}
+
+</div>
+
+<div class="project-card">
+
+<video class="project-thumb" autoplay muted loop playsinline>
+  <source src="assets/project_videos/app_vid.mp4" type="video/mp4">
+</video>
+
+**Tech:** Python · Desktop app  
+
+### Monte Carlo Sphere: 2D &amp; 3D π Approximation
+
+A standalone Python executable that demonstrates Monte Carlo estimation of π in 2D and 3D with interactive visuals. Built to show how numerical methods connect to geometry in an intuitive way.
+
+[View code](https://github.com/edwardarchaeology/monte_carlo_sphere){.btn .btn-primary .btn-sm}
+
+[Numerical methods]{.badge} [Desktop]{.badge} [Education]{.badge}
+
+</div>
+
+<div class="project-card">
+
+![](assets/project_images/fbi_api.png){.project-thumb}
+
+**Tech:** Python · APIs · Automation  
+
+### FBI Crime Data Explorer API Bot
+
+An asynchronous query bot that talks to the FBI Crime Data Explorer API, handles large request batches, and outputs structured results for downstream analysis.
+
+[View code](https://github.com/edwardarchaeology/FBI_CDE_API_bot){.btn .btn-primary .btn-sm}
+
+[APIs]{.badge} [Automation]{.badge} [Crime data]{.badge}
+
+</div>
+
+<div class="project-card">
+
+![](assets/project_images/WHO_Death/WHO_DEATH.gif){.project-thumb}
+
+**Tech:** Tableau · Data viz  
+
+### WHO Mortality Dashboard
+
+A Tableau project converting a static WHO mortality analysis into a fully dynamic dashboard. Demonstrates calculated fields, parameter-driven views, and dynamic titles.
+
+[View project](project_writeups/who-mortality-dashboard.qmd){.btn .btn-primary .btn-sm}
+
+[Tableau]{.badge} [Health data]{.badge}
+
+</div>
+
+<div class="project-card">
+
+![](assets/project_images/morphs/Ridge.png){.project-thumb}
+
+**Tech:** Python · QGIS  
+
+### Geomorphons Feature Processing
+
+A standalone Python workflow that plugs into QGIS to generate and process geomorphon-based terrain features, making landform classification reproducible and scalable.
+
+[View project](project_writeups/geomorphons-standalone.qmd){.btn .btn-primary .btn-sm}
+
+[Geoprocessing]{.badge} [Terrain]{.badge}
+
+</div>
+
+<div class="project-card">
+
+![](assets/project_images/pyramid/Pyramid.png){.project-thumb}
+
+**Tech:** R · Data viz  
+
+### Chaos Game in 3D
+
+A 2D chaos game rendered in three dimensions, used as a teaching and exploration tool for probabilistic fractal generation and advanced data visualization.
+
+[View project](project_writeups/chaos-game-3d.qmd){.btn .btn-primary .btn-sm}
+
+[Fractals]{.badge} [Visualization]{.badge}
+
+</div>
+
+</div>
+
+---
+
+<h2>Research &amp; methods</h2>
+
+<div class="portfolio-grid"
+     style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:2rem;margin-top:2rem;">
+
+<div class="project-card">
+
+![](assets/project_images/kurd/EB_GBM_Map.png){.project-thumb}
+
+**Tech:** Machine learning · Archaeology  
+
+### Sampling Bias &amp; Environmental Correlation in Kurdistan
+
+A multi-model machine learning study (RF, GBM, MaxEnt) exploring sampling bias and environmental covariates in archaeological predictive mapping for Northern Iraqi Kurdistan.
+
+[View project](project_writeups/kurdistan-sampling-bias.qmd){.btn .btn-primary .btn-sm}
+
+[Archaeology]{.badge} [SDM]{.badge} [Bias]{.badge}
+
+</div>
+
+<div class="project-card">
+
+![](assets/project_images/flood_deep_learning/flood.png){.project-thumb}
+
+**Tech:** Deep learning · Flood risk  
+
+### Deep Learning for Flood Evaluation
+
+An application of deep learning to evaluate flood extent and risk, combining spatial data with neural networks to improve situational awareness.
+
+[View project](https://arcg.is/1Gaayv){.btn .btn-primary .btn-sm}
+
+[Remote sensing]{.badge} [Flooding]{.badge}
+
+</div>
+
+<div class="project-card">
+
+![](assets/project_images/Skulls/MALPACA.png){.project-thumb}
+
+**Tech:** 3D morphometrics  
+
+### Auto-Landmarking of Human Viscerocranium
+
+Research on automating landmark placement on 3D skull scans, using morphometric techniques to support classification and pattern detection in cranial shape.
+
+[View project](project_writeups/autolandmarking-skulls.qmd){.btn .btn-primary .btn-sm}
+
+[3D]{.badge} [Morphometrics]{.badge}
+
+</div>
+
+<div class="project-card">
+
+![](assets/project_images/PCA/PC1_2.png){.project-thumb}
+
+**Tech:** Statistics · Data quality  
+
+### PCA for Visual Inspection of Missing Data
+
+Uses Principal Component Analysis to visualize and diagnose missing data patterns, helping analysts understand where data gaps might bias downstream models.
+
+[View project](project_writeups/pca-missing-data.qmd){.btn .btn-primary .btn-sm}
+
+[PCA]{.badge} [Data quality]{.badge}
+
+</div>
+
+<div class="project-card">
+
+![](assets/project_images/ME_MAP.png){.project-thumb}
+
+**Tech:** Machine learning · Archaeology  
+
+### Machine Learning for Archaeological Geographic Data
+
+An end-to-end example demonstrating how ML models can support archaeological research using geographic covariates.
+
+[View project](project_writeups/ml-archaeology-geo.qmd){.btn .btn-primary .btn-sm}
+
+[Archaeology]{.badge} [ML]{.badge}
+
+</div>
+
+<div class="project-card">
+
+![](assets/project_images/models/AW.png){.project-thumb}
+
+**Tech:** Photogrammetry · 3D  
+
+### Structure-from-Motion 3D Photogrammetry
+
+Demonstrates a full SfM workflow to build 3D models from overlapping photographs, used in both archaeology and environmental analysis.
+
+[View project](project_writeups/photogrammetry-3d.qmd){.btn .btn-primary .btn-sm}
+
+[Photogrammetry]{.badge} [3D models]{.badge}
+
+</div>
+
+</div>

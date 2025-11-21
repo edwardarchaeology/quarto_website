@@ -1,0 +1,48 @@
+---
+title: "About"
+body-classes: about-page
+---
+
+[< Back](index.qmd){.about-back-link}
+
+<div class="about-container">
+
+<div class="about-layout">
+
+<div class="about-text">
+
+## About {.about-heading}
+
+Hello and welcome!
+
+I'm **Edward Leland**, a New Orleans–based geospatial & data scientist
+helping private teams turn messy data and satellite imagery into clear decisions.
+I build maps, models, and dashboards that answer questions like where to expand,
+how to reduce risk, and what's driving performance.
+Typical engagements include site selection & territory mapping, satellite-based
+monitoring, market/demand analysis, and executive KPIs and decision dashboards.
+Delivery is fast, visual, and actionable—so your team can move with confidence.
+
+### Approach:
+
+1. **Scope** – clarify decisions & data.  
+2. **Model** – pipeline construction, model development, and final analysis.  
+3. **Deliver** – decision-ready dashboards, applications, and briefs.
+
+### Tooling:
+
+Python · R · SQL · Tableau/PowerBI · PostGIS · QGIS · GDAL · Google Earth Engine
+
+[Book a Free Consult](contact.qmd){.btn .btn-lilac .about-cta}
+
+</div>
+
+<div class="about-photo-card">
+
+![](assets/headshot/headshot.jpg){.about-photo}
+
+</div>
+
+</div>
+
+</div>

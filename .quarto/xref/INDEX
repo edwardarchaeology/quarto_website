@@ -1,0 +1,119 @@
+{
+  "about.qmd": {
+    "about.html": "29a59fe9"
+  },
+  "contact.qmd": {
+    "contact.html": "4c60f371"
+  },
+  "index.qmd": {
+    "index.html": "33a84f9a"
+  },
+  "industries.qmd": {
+    "industries.html": "27b9f94c"
+  },
+  "portfolio.qmd": {
+    "portfolio.html": "a1cc84bd"
+  },
+  "services.qmd": {
+    "services.html": "6293b3fe"
+  },
+  "assets/project_images/flood_deep_learning/placeholder.md": {
+    "placeholder.html": "07c231d4"
+  },
+  "assets/project_images/kurd/placeholder.md": {
+    "placeholder.html": "9b1288f8"
+  },
+  "assets/project_images/models/placeholder.md": {
+    "placeholder.html": "833b2e78"
+  },
+  "assets/project_images/morphs/placeholder.md": {
+    "placeholder.html": "a0e99d35"
+  },
+  "assets/project_images/PCA/deeper/placeholder.md": {
+    "placeholder.html": "d85b9ff1"
+  },
+  "assets/project_images/PCA/placeholder.md": {
+    "placeholder.html": "637835bc"
+  },
+  "assets/project_images/pyramid/placeholder.md": {
+    "placeholder.html": "c1e03a8c"
+  },
+  "assets/project_images/Skulls/placeholder.md": {
+    "placeholder.html": "916509b3"
+  },
+  "assets/project_images/WHO_Death/placeholder.md": {
+    "placeholder.html": "df9b9d85"
+  },
+  "assets/project_videos/placeholder.md": {
+    "placeholder.html": "f5d4c0e3"
+  },
+  "edwardarchaeology.github.io/3D.md": {
+    "3D.html": "60d4185c"
+  },
+  "edwardarchaeology.github.io/geomorph.md": {
+    "geomorph.html": "d476eefc"
+  },
+  "edwardarchaeology.github.io/gomesa.md": {
+    "gomesa.html": "7166ee87"
+  },
+  "edwardarchaeology.github.io/images/flood_deep_learning/placeholder.md": {
+    "placeholder.html": "affdc0c1"
+  },
+  "edwardarchaeology.github.io/images/kurd/placeholder.md": {
+    "placeholder.html": "344b3e16"
+  },
+  "edwardarchaeology.github.io/images/models/placeholder.md": {
+    "placeholder.html": "f10e411c"
+  },
+  "edwardarchaeology.github.io/images/morphs/placeholder.md": {
+    "placeholder.html": "4fd7f779"
+  },
+  "edwardarchaeology.github.io/images/PCA/deeper/placeholder.md": {
+    "placeholder.html": "39517743"
+  },
+  "edwardarchaeology.github.io/images/PCA/placeholder.md": {
+    "placeholder.html": "bd5bc53a"
+  },
+  "edwardarchaeology.github.io/images/pyramid/placeholder.md": {
+    "placeholder.html": "4ba5759b"
+  },
+  "edwardarchaeology.github.io/images/Skulls/placeholder.md": {
+    "placeholder.html": "57168a59"
+  },
+  "edwardarchaeology.github.io/images/WHO_Death/placeholder.md": {
+    "placeholder.html": "9cba3396"
+  },
+  "project_writeups/autolandmarking-skulls.qmd": {
+    "autolandmarking-skulls.html": "69580054"
+  },
+  "project_writeups/chaos-game-3d.qmd": {
+    "chaos-game-3d.html": "afa56478"
+  },
+  "project_writeups/geomorphons-standalone.qmd": {
+    "geomorphons-standalone.html": "a1a601dc"
+  },
+  "project_writeups/kurdistan-sampling-bias.qmd": {
+    "kurdistan-sampling-bias.html": "9402f02b"
+  },
+  "project_writeups/ml-archaeology-geo.qmd": {
+    "ml-archaeology-geo.html": "b659de83"
+  },
+  "project_writeups/pca-missing-data.qmd": {
+    "pca-missing-data.html": "9241e3d5"
+  },
+  "project_writeups/photogrammetry-3d.qmd": {
+    "photogrammetry-3d.html": "1661744f"
+  },
+  "project_writeups/simple-spatial-shiny.qmd": {
+    "simple-spatial-shiny.html": "b492df14"
+  },
+  "project_writeups/waffle-house-index.qmd": {
+    "waffle-house-index.html": "03f79cb8"
+  },
+  "project_writeups/who-mortality-dashboard.qmd": {
+    "who-mortality-dashboard.html": "87a5369c"
+  },
+  "project_writeups/presentations.qmd": {
+    "presentations.html": "eff5a5a2"
+  }
+}

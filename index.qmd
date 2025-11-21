@@ -1,0 +1,42 @@
+﻿---
+title: ""
+format:
+  html:
+    toc: false
+    page-layout: full 
+body-classes: home-page
+---
+
+::: {.hero .home-hero}
+::: {.container}
+::: {.row .hero-row}
+
+::: {.col-lg-6}
+<div class="hero-title">Decoding Data. Defining Tomorrow.</div>
+
+::: {.hero-subhead}
+<div class="subhead-indent">– <em>Data, AI, and geospatial expertise for governments, research centers, and mission-driven organizations.</em></div>
+:::
+
+<div style="height: 1rem;"></div>
+
+::: {.hero-lines}
+<div class="hero-offset">
+- Data Science &amp; Business Intelligence  
+- GIS &amp; Location Intelligence  
+- AI and Data Engineering  
+- Satellite and Remote Sensing  
+</div>
+:::
+
+<div style="height: 2rem;"></div>
+
+<div class="button-offset">
+[Book a free consult](contact.qmd){.btn .btn-primary .btn-lg}
+[View services](services.qmd){.btn .btn-lilac .btn-lg}
+</div>
+
+:::
+:::
+:::
+:::

@@ -1,0 +1,51 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - "*.qmd"
+    - "!edwardarchaeology.github.io/**"
+  resources:
+    - assets/**
+
+website:
+  title: "Leland Data Consulting"
+  site-url: https://edwardarchaeology.github.io
+  navbar:
+    logo: "assets/img/logo.png"
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
+      - href: services.qmd
+        text: Services
+      - href: portfolio.qmd
+        text: Portfolio
+      - href: contact.qmd
+        text: Contact
+    right:
+      - icon: envelope-fill
+        href: "mailto:leland.data.consulting@gmail.com"
+      - icon: github
+        href: "https://github.com/edwardarchaeology"
+      - icon: linkedin
+        href: "https://www.linkedin.com/in/edward-leland/"
+
+  page-footer:
+    center:
+      - text: "© 2025 LELAND DATA CONSULTING. ALL RIGHTS RESERVED."
+
+format:
+  html:
+    smooth-scroll: true
+    toc: false
+    theme:
+      light:
+        - cosmo
+        - assets/scripts/custom.scss
+      dark:
+        - cosmo
+        - assets/scripts/custom.scss
+    includes:
+      after-body: assets/scripts/fit-title.html
+    page-layout: full

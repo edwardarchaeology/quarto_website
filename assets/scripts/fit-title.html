@@ -1,0 +1,112 @@
+<!-- Small script to auto-scale the hero title so it stays on a single line. -->
+<script>
+  (function () {
+    // Debounce helper
+    function debounce(fn, wait) {
+      let t;
+      return function () {
+        clearTimeout(t);
+        t = setTimeout(() => fn.apply(this, arguments), wait);
+      };
+    }
+
+    // Fit single element text to its container width using binary search on font-size
+    function fitElement(el, options) {
+      if (!el || !el.parentElement) return;
+      const parent = el.parentElement;
+      const style = window.getComputedStyle(el);
+      // Respect a sensible minimum and maximum; these can be tuned
+      const minPx = options && options.minPx || 20;
+      const maxPx = options && options.maxPx || 200;
+
+      // Ensure single-line measurement
+      el.style.whiteSpace = 'nowrap';
+      el.style.display = 'inline-block';
+
+      // Available width (account for parent's padding)
+      const parentRect = parent.getBoundingClientRect();
+      const parentStyle = window.getComputedStyle(parent);
+      const parentPadding = (parseFloat(parentStyle.paddingLeft) || 0) + (parseFloat(parentStyle.paddingRight) || 0);
+      const available = Math.max(10, parentRect.width - parentPadding - 2);
+
+      // Binary search for the largest font-size that fits
+      let low = minPx, high = maxPx, mid;
+      for (let i = 0; i < 12; i++) {
+        mid = (low + high) / 2;
+        el.style.fontSize = mid + 'px';
+        // Use scrollWidth vs clientWidth to detect overflow
+        if (el.scrollWidth > available) {
+          // too big
+          high = mid;
+        } else {
+          // fits
+          low = mid;
+        }
+      }
+
+      // Apply the best size found (low). Prevent layout thrash by rounding.
+      el.style.fontSize = Math.max(minPx, Math.round(low)) + 'px';
+    }
+
+    function fitAll() {
+      document.querySelectorAll('.hero-title').forEach(el => {
+        // Use larger max on wide screens and smaller on narrow screens
+        const max = window.innerWidth >= 992 ? 200 : 120;
+        const min = 20;
+        fitElement(el, { minPx: min, maxPx: max });
+      });
+    }
+
+    const onResize = debounce(fitAll, 120);
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // Run once after content is parsed
+      fitAll();
+      // Re-run after fonts load (helps when webfonts change metrics)
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(fitAll).catch(() => {});
+      }
+      window.addEventListener('resize', onResize);
+    });
+  })();
+</script>
+
+<!-- Helper script to add page-specific body classes after load -->
+<script>
+  (function () {
+    function normalizePath(path) {
+      return (path || "").toLowerCase();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const body = document.body;
+      if (!body) return;
+
+      const path = normalizePath(window.location.pathname || "");
+      const titleEl = document.querySelector("#title-block-header .title");
+      const titleText = titleEl ? titleEl.textContent.trim().toLowerCase() : "";
+      const hasHero = document.querySelector(".hero.home-hero") !== null;
+
+      const isHomePath =
+        path === "/" ||
+        path === "" ||
+        path.endsWith("/index.html") ||
+        path.endsWith("\\index.html"); /* Windows local preview */
+
+      const isPortfolioPath =
+        path.endsWith("/portfolio") ||
+        path.endsWith("/portfolio/") ||
+        path.endsWith("/portfolio.html") ||
+        path.endsWith("\\portfolio.html") ||
+        (/portfolio\.html$/.test(path));
+
+      if (hasHero || isHomePath) {
+        body.classList.add("home-page");
+      }
+
+      if (titleText === "portfolio" || isPortfolioPath) {
+        body.classList.add("portfolio-page");
+      }
+    });
+  })();
+</script>

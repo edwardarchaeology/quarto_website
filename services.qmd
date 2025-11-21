@@ -1,0 +1,184 @@
+---
+title: "Services"
+body-classes: services-page
+---
+
+<style>
+/* Page-local overrides so the services page sits on a readable card */
+body.services-page main.content,
+body.services-page .page-content {
+	background: rgba(255,255,255,0.98) !important;
+	border-radius: 20px !important;
+	padding: 2rem 2.5rem !important;
+	margin: 2rem auto !important;
+	max-width: 1100px !important;
+}
+
+/* Match portfolio title size/color so Services title aligns visually */
+body.services-page #title-block-header .title,
+body.services-page .quarto-title-block .title,
+body.services-page h1.title {
+	margin-top: 0;
+	margin-bottom: 0.25rem;
+	font-size: clamp(2.6rem, 3.4vw, 4rem);
+	line-height: 1.05;
+	font-weight: 700;
+	color: #3b3a6d; /* same as $ldc-navy in main stylesheet */
+}
+
+section.services-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1rem;
+}
+
+@media (min-width: 768px) {
+	section.services-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.service-card { padding: 1.25rem; border-radius: 14px; }
+
+.engagement-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+@media (min-width: 700px) { .engagement-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.cta-row { margin: 2rem 0; }
+.cta-center { text-align: center; }
+.cta-left { text-align: left; }
+
+
+</style>
+
+<div class="about-container">
+
+Below are the primary service buckets and typical engagement models I offer. If you don't see exactly what you need, I usually tailor a small pilot to prove value quickly.
+
+<hr />
+
+### Service buckets
+
+<section class="services-grid">
+
+<div class="industry-card service-card">
+#### Data & BI
+
+Executive dashboards, KPI design, forecasting, automation, and decision plumbing for executive teams.
+</div>
+
+<div class="industry-card service-card">
+#### GIS & Location Intelligence
+
+Site selection, territory design, drive-time & catchment analysis, and network optimization.
+</div>
+
+<div class="industry-card service-card">
+#### Satellite & Remote Sensing
+
+Change detection, asset monitoring, land-cover classification, NDVI & index time-series, and coastal risk analysis.
+</div>
+
+<div class="industry-card service-card">
+#### Custom Modeling
+
+Demand scoring, risk heatmaps, suitability analysis, scenario planning, and automated monitoring pipelines.
+</div>
+
+</section>
+
+<hr />
+
+### Engagement models
+
+<div class="engagement-grid">
+
+<div class="industry-card">
+#### Discovery Sprint (2–3 weeks)
+
+Audit of data, quick wins, and a short roadmap with an actionable prototype.
+</div>
+
+<div class="industry-card">
+#### Project Delivery (4–8 weeks)
+
+Scoped outcome: a dashboard, report, or monitoring workflow delivered end-to-end.
+</div>
+
+<div class="industry-card">
+#### Monitoring (Monthly)
+
+Ongoing updates, alerts, and feature improvements to keep the solution current.
+</div>
+
+</div>
+
+::: {.cta-row}
+::: {.cta-left}
+[Request a proposal](contact.qmd){.btn .btn-primary}
+:::
+:::
+
+<hr />
+
+## Industries served
+
+I work across sectors where location, risk, and change matter. Below are common examples and short mini-cases.
+
+<section class="industries-grid">
+
+<div class="industry-card">
+### Energy & Utilities
+
+Map corridor routing and encroachment risk around critical assets. Prioritise maintenance with satellite-detected change.
+
+_Mini case: Pipeline Corridor Risk Mapping_ — combined easement data, SAR change alerts, and field tickets to flag hotspots.
+</div>
+
+<div class="industry-card">
+### Real Estate & Retail
+
+Score sites with demand, drive-time, and competition. Design territories to reduce cannibalisation and improve coverage.
+
+_Mini case: Multi-Site Expansion Playbook_ — tract scoring and trade-area maps delivered as an executive shortlist.
+</div>
+
+<div class="industry-card">
+### Logistics & Mobility
+
+Optimize territories and routes to lower miles and stabilise ETAs. Visualise service coverage for capacity planning.
+
+_Mini case: Distributor Territory Redesign_ — rebalanced zones and removed route overlap with clear KPIs.
+</div>
+
+<div class="industry-card">
+### Environmental & Coastal
+
+Monitor shoreline change and wetlands with time-series remote sensing and produce compliance-ready reporting.
+
+_Mini case: Coastal Erosion Monitoring Pilot_ — NDWI/NDVI trends with an alerting dashboard.
+</div>
+
+<div class="industry-card">
+### Agriculture
+
+Map crop health and variability (NDVI anomalies) and delineate yield zones for targeted interventions.
+
+_Mini case: Field Variability Mapping_ — Sentinel-2 indices guiding in-field checks and inputs.
+</div>
+
+<div class="industry-card">
+### Insurance & Finance
+
+Portfolio exposure mapping with hazard overlays and event monitoring for rapid triage.
+
+_Mini case: Portfolio Exposure Heatmaps_ — unified parcel-level risk layers for underwriting reviews.
+</div>
+
+</section>
+
+::: {.cta-row}
+::: {.cta-left}
+[Request a proposal](contact.qmd){.btn .btn-primary}
+:::
+:::
+
+</div>
+

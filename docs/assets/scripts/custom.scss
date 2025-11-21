@@ -1,0 +1,977 @@
+/* ==========================================================================
+   BRAND VARIABLES
+   ========================================================================== */
+
+/*-- scss:defaults --*/
+$ldc-cream:      #f7f2e5;
+$ldc-navy:       #3b3a6d;
+$ldc-navy-dark:  #2e2d53;
+$ldc-deep-navy:  #2c2660;
+$ldc-olive:      #8B9880;
+$ldc-olive-dark: #79856f;
+$ldc-lilac:      #D4CD96;
+$ldc-lilac-dark: #c7bf85;
+$ldc-text:       #222222;
+
+/*-- scss:rules --*/
+
+:root {
+  --site-navbar-height: 100px;
+}
+
+/* ==========================================================================
+   GLOBAL BACKGROUND
+   ========================================================================== */
+
+body {
+  background:
+    linear-gradient(rgba(245,240,222,0.6), rgba(245,240,222,0.6)),
+    url("assets/img/background.png") no-repeat center var(--site-navbar-height) fixed;
+  background-size: cover;
+  color: $ldc-text;
+}
+
+/* ==========================================================================
+   CONTENT CARD (non-home page)
+   ========================================================================== */
+
+main.content,
+.page-content {
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  margin: 2rem auto;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+  max-width: 1000px;
+}
+
+/* Turn the card OFF on the homepage but keep some spacing */
+body.home-page main.content,
+body.home-page .page-content {
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  margin-top: 1.5rem;
+}
+
+/* ==========================================================================
+   NAVBAR
+   ========================================================================== */
+
+.navbar-nav .nav-link {
+  font-weight: 600;
+  font-size: .1rem;
+}
+
+/* Desktop navbar */
+@media (min-width: 992px) {
+  .navbar {
+    height: var(--site-navbar-height);
+    min-height: var(--site-navbar-height);
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.04);
+    background-color: #fff;
+  }
+
+  .navbar-brand {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    .navbar-logo {
+      max-height: 74px;
+      height: auto;
+      width: auto;
+      display: block;
+      object-fit: contain;
+    }
+  }
+
+  /* hide textual site title when logo present */
+  .navbar-brand:not(.navbar-brand-logo) .navbar-title {
+    display: none !important;
+  }
+
+  .navbar .navbar-nav.me-auto {
+    display: flex;
+    width: 60%;
+    justify-content: space-between;
+    margin: 0 1rem;
+    align-items: center;
+  }
+
+  .navbar .navbar-nav.me-auto .nav-item {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+
+  .navbar-nav .nav-link {
+    font-size: 1rem;
+  }
+}
+
+/* Mobile navbar: hide textual title if logo present */
+@media (max-width: 991.98px) {
+  .navbar-brand:not(.navbar-brand-logo) .navbar-title {
+    display: none;
+  }
+
+  .navbar {
+    background-color: #fff;
+  }
+
+  .navbar-nav .nav-link {
+    font-size: 0.5rem;
+  }
+}
+
+/* ==========================================================================
+   HERO BAND (HOME PAGE) – BASE STYLES
+   ========================================================================== */
+
+/* Base hero styling: mobile-first */
+.hero.home-hero {
+  width: 100%;
+  padding: calc(var(--site-navbar-height) + 1rem) 0 2.5rem;
+  color: $ldc-navy;
+  text-align: left;
+
+  .container {
+    max-width: 1200px;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+/* Main heading — mobile first */
+.hero-title {
+  margin: 0 0 0.35rem 0;
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  line-height: 1.1;
+  font-weight: 700;
+  color: $ldc-navy;
+  white-space: normal;   /* allow wrapping on small screens */
+}
+
+/* Subhead */
+.hero-subhead {
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  font-style: italic;
+  color: #48466a;
+  margin-top: 0.05rem;
+  margin-bottom: 0.7rem;
+  white-space: normal;
+}
+
+.subhead-indent {
+  padding-left: 1.25rem;
+  font-style: italic;
+  color: inherit;
+}
+
+/* Bullet lines */
+.hero-lines {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  font-size: 1.2rem;
+  font-weight: 600;
+
+  ul {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+
+  li {
+    margin-bottom: 0.35rem;
+  }
+}
+
+.hero-offset,
+.button-offset {
+  padding-left: 0;
+}
+
+/* Buttons under hero */
+.hero-lines + a.btn,
+.hero-lines + p a.btn,
+.hero-lines ~ a.btn {
+  margin-right: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+.btn.btn-primary {
+  background-color: $ldc-olive;
+  border-color: $ldc-olive;
+  color: #fff;
+
+  &:hover,
+  &:focus {
+    background-color: $ldc-olive-dark;
+    border-color: $ldc-olive-dark;
+    color: #fff;
+  }
+}
+
+.btn.btn-lilac {
+  background-color: $ldc-lilac;
+  border-color: $ldc-lilac;
+  color: $ldc-deep-navy;
+  font-weight: 550;
+
+  &:hover,
+  &:focus {
+    background-color: $ldc-lilac-dark;
+    border-color: $ldc-lilac-dark;
+    color: $ldc-deep-navy;
+  }
+}
+
+.btn-primary,
+.btn-lilac {
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+  line-height: 1.3;
+  display: inline-block;
+}
+
+/* ==========================================================================
+   INDUSTRIES GRID
+   ========================================================================== */
+
+section.industries-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.industry-card {
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 18px;
+  padding: 1.5rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+}
+
+.page-footer {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* ==========================================================================
+   PORTFOLIO GRID
+   ========================================================================== */
+
+.portfolio-page {
+  padding-top: 0rem;
+}
+
+.portfolio-page .portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.project-card {
+  border-radius: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  background-color: #fff;
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+}
+
+.project-card .project-thumb {
+  display: block;
+  border-radius: 1rem;
+  object-fit: cover;
+  max-height: 200px;
+  height: 200px;
+  background-color: #f5f2de;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.project-card video.project-thumb {
+  height: 200px;
+  object-fit: cover;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+}
+
+.project-card > *:last-child {
+  margin-top: auto;
+}
+
+/* Project writeups */
+body.project-page img {
+  max-width: min(100%, 700px);
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.5rem;
+}
+
+.project-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: $ldc-deep-navy;
+  margin-top: 0.4rem;
+  margin-bottom: 0.35rem;
+}
+
+.project-card p {
+  margin-bottom: 0.5rem;
+}
+
+.project-card .btn {
+  margin-top: 0.4rem;
+}
+
+.project-meta {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $ldc-olive-dark;
+  margin-bottom: 0.25rem;
+}
+
+.badge {
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background-color: $ldc-cream;
+  color: $ldc-deep-navy;
+  margin-right: 0.25rem;
+  margin-top: 0.3rem;
+}
+
+/* ==========================================================================
+   PORTFOLIO PAGE TITLE (match home hero but responsive)
+   ========================================================================== */
+
+/* Title block wrapper */
+body.portfolio-page #title-block-header,
+body.portfolio-page .quarto-title-block {
+  text-align: left !important;
+  width: 100%;
+  margin: 0.6rem 0 0.4rem; /* left/right margins zero to align with body content */
+  padding: 0; /* remove left/right padding so title aligns with intro text */
+  border-bottom: none !important;
+}
+
+/* For small screens, stack title and subtitle vertically instead of a horizontal layout */
+@media (max-width: 767.98px) {
+  body.portfolio-page #title-block-header .quarto-title-block > div {
+    display: block !important;
+  }
+}
+
+/* Portfolio header layout: title left, stacked links right (tight vertical spacing) */
+body.portfolio-page #title-block-header .quarto-title {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+/* Portfolio H1 title */
+body.portfolio-page #title-block-header .title,
+body.portfolio-page .quarto-title-block .title,
+body.portfolio-page h1.title {
+  text-align: left !important;
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+  font-family: inherit !important;
+  font-size: clamp(2.6rem, 3.4vw, 4rem); /* slightly larger title */
+  line-height: 1.05;
+  font-weight: 700;
+  color: $ldc-navy !important;
+}
+
+/* Subtitle under Portfolio title - right-aligned stack on desktop */
+body.portfolio-page #title-block-header .subtitle {
+  text-align: right !important;
+  margin-top: 0.25rem !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important; /* ensure no right padding so links align with intro */
+  line-height: 1;
+  font-size: 0.95rem;
+}
+
+/* Subtitle links as subtle secondary nav */
+body.portfolio-page #title-block-header .subtitle {
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* no space between stacked links */
+  text-align: right;
+}
+
+body.portfolio-page #title-block-header .subtitle a {
+  display: block;
+  color: $ldc-navy;
+  font-weight: 500;
+  text-decoration: none;
+  margin: 0;       /* remove default spacing */
+  padding: 0;      /* remove any left/right padding */
+  padding-right: 0 !important; /* explicit: no right padding */
+  line-height: 1;  /* keep links tight, no white space between lines */
+}
+
+body.portfolio-page #title-block-header .subtitle a:hover,
+body.portfolio-page #title-block-header .subtitle a:focus {
+  text-decoration: underline;
+}
+
+/* Desktop: keep the title block inside the body/content container
+   and position title left, stacked links right (tight spacing). */
+@media (min-width: 992px) {
+  body.portfolio-page #title-block-header,
+  body.portfolio-page .quarto-title-block {
+    max-width: 1000px !important;
+    margin: 0.6rem 0 0.4rem !important; /* keep aligned with left of body/content */
+    padding-left: 0 !important;  /* remove left padding on desktop so title aligns with intro */
+    padding-right: 0 !important; /* remove right padding so subtitle aligns with intro right edge */
+  }
+
+  body.portfolio-page #title-block-header .quarto-title {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  body.portfolio-page #title-block-header .title,
+  body.portfolio-page .quarto-title-block .title,
+  body.portfolio-page h1.title {
+    margin-left: 0 !important;
+  }
+}
+
+/* Small screens: stack title + links again */
+@media (max-width: 767.98px) {
+  body.portfolio-page #title-block-header .quarto-title {
+    display: block !important;
+  }
+}
+
+/* Portfolio main content spacing */
+body.portfolio-page main.content,
+body.portfolio-page .page-content {
+  margin-top: 0.5rem !important;
+  padding-top: 0 !important;
+}
+
+/* Let cards size to content */
+body.portfolio-page .project-card {
+  height: auto;
+}
+
+/* First body paragraph under the title */
+body.portfolio-page main.content > p:first-of-type {
+  margin-top: 1rem !important;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Softer divider under intro */
+body.portfolio-page main.content > hr:first-of-type {
+  margin-top: 0.4rem;
+  margin-bottom: 1.6rem;
+  border-top: 1px solid rgba(59, 58, 109, 0.22);
+}
+
+/* ==========================================================================
+   GLOBAL: REMOVE QUARTO WHITE CONTENT BOX
+   ========================================================================== */
+
+body.home-page main#quarto-document-content,
+body.home-page main#quarto-document-content .content,
+body.home-page main#quarto-content .content,
+body.home-page main#quarto-content {
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Some themes wrap the content in .content.page-columns */
+body.home-page .content,
+body.home-page .content.page-columns {
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Removes the vertical rule Quarto inserts in two-column mode */
+body.home-page .page-columns::before {
+  display: none !important;
+}
+
+/* Also clear any remaining white-box styles */
+#quarto-document-content,
+#quarto-content,
+main.content,
+.page-content,
+.page-columns,
+.column-page,
+.content {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* ==========================================================================
+   HOME PAGE HERO POSITIONING (CONSOLIDATED, RESPONSIVE)
+   ========================================================================== */
+
+/* Hide the duplicate Quarto title on home page */
+body.home-page #title-block-header {
+  display: none !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Hero sits directly under navbar, all screens */
+.hero.home-hero {
+  padding-top: 1rem;
+  padding-bottom: 3rem;
+  width: 100%;
+}
+
+/* Make hero container fluid and left-padded responsively */
+.hero.home-hero > .container {
+  max-width: none !important;              /* no centered 1140px box */
+  width: 100% !important;
+  margin: 0 !important;
+  padding-left: clamp(1rem, 4vw, 3rem) !important;  /* responsive left padding */
+  padding-right: clamp(1rem, 4vw, 3rem) !important; /* responsive right padding */
+}
+
+/* Row: no extra margins, hug the top */
+.hero.home-hero .row {
+  margin: 0 !important;
+  align-items: flex-start !important;
+}
+
+/* Text column: start flush-left, keep width reasonable on large screens */
+.hero.home-hero .col-lg-6 {
+  padding-left: 0 !important;
+  flex: 0 1 clamp(26rem, 45vw, 52rem);
+  max-width: clamp(26rem, 45vw, 52rem);
+}
+
+@media (min-width: 992px) {
+  .hero.home-hero .col-lg-6 {
+    max-width: 60rem;
+  }
+
+  .hero-title {
+    white-space: nowrap;
+  }
+}
+
+/* Keep hero subtitle on one line on large screens */
+@media (min-width: 1200px) {
+  .hero-subhead .subhead-indent {
+    white-space: nowrap;
+  }
+}
+
+/* Force all hero text to align left, with no negative margins */
+.hero-title,
+.hero-subhead,
+.hero-lines,
+.button-offset,
+.hero-offset {
+  text-align: left !important;
+  margin-left: 0 !important;
+}
+
+.hero.home-hero > .container {
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding-left: clamp(1rem, 4vw, 3rem) !important;
+  padding-right: clamp(1rem, 4vw, 3rem) !important;
+}
+
+/* Don’t let the section (.level1) recentre itself */
+.hero.home-hero section.hero-title.level1 {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Keep the row tight to the top */
+.hero.home-hero .row {
+  margin: 0 !important;
+  align-items: flex-start !important;
+}
+
+
+/* Make the Quarto content wrapper not center inner containers */
+#quarto-content.quarto-container {
+  max-width: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Make HERO container a REAL full-width fluid container */
+@media (min-width: 992px) {
+  .hero.home-hero > .container {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    /* Stronger asymmetric padding so hero text sits further left,
+       leaving more room on the right for the globe illustration. */
+    padding-left: 2rem !important;
+    padding-right: 28rem !important;
+  }
+
+  /* FORCE the hero text column to stick to the left */
+  .hero.home-hero .row {
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+  }
+
+  .hero.home-hero section.hero-title {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    margin: 0 !important;
+  }
+}
+
+/* On large desktops, shift the text block further left
+   using a negative horizontal offset (equivalent in effect
+   to “negative padding” on the text side). */
+@media (min-width: 1200px) {
+  .hero.home-hero .col-lg-6 {
+    transform: translateX(-10rem);
+  }
+}
+
+/* Portfolio custom header: title left, body intro right */
+body.portfolio-page .portfolio-header {
+  display: grid;
+  grid-template-columns: minmax(0, 2.5fr) minmax(0, 4fr);
+  column-gap: 2rem;
+  align-items: flex-start;
+  margin-top: 0.25rem;
+}
+
+body.portfolio-page .portfolio-title {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+  font-size: clamp(2.2rem, 3vw, 3.2rem);
+  font-weight: 700;
+  color: $ldc-navy;
+}
+
+/* Keep the Datacamp / presentations links under the title on the left */
+body.portfolio-page .portfolio-header p:first-of-type {
+  grid-column: 1;
+  grid-row: 2;
+  margin-top: 0.35rem;
+}
+
+body.portfolio-page .portfolio-header a {
+  display: block;
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+}
+
+body.portfolio-page .portfolio-intro {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  margin: 0;           /* kill default <p> top margin */
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* On smaller screens, stack everything vertically */
+@media (max-width: 767.98px) {
+  body.portfolio-page .portfolio-header {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body.portfolio-page .portfolio-intro {
+    grid-column: 1;
+    grid-row: auto;
+    margin-top: 0.75rem;
+  }
+}
+
+/* Make the following content span full width under the header */
+body.portfolio-page .portfolio-header + hr,
+body.portfolio-page .portfolio-header + hr + h2 {
+  margin-top: 0.7rem;
+}
+
+/* ==========================================================================
+   ABOUT PAGE LAYOUT
+   ========================================================================== */
+
+body.about-page #title-block-header {
+  display: none !important;
+}
+
+body.about-page #quarto-content.quarto-container {
+  max-width: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+body.about-page .about-container {
+  max-width: 1100px;
+  margin: 1.75rem auto 3rem;
+  padding: 0 1.5rem;
+}
+
+body.about-page .about-back-link {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  color: $ldc-navy;
+  text-decoration: none;
+}
+
+body.about-page .about-back-link:hover,
+body.about-page .about-back-link:focus {
+  text-decoration: underline;
+}
+
+body.about-page .about-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+body.about-page .about-heading {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: clamp(2.1rem, 3vw, 2.8rem);
+  font-weight: 700;
+  color: $ldc-navy;
+}
+
+body.about-page .about-text {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+body.about-page .about-text h3 {
+  margin-top: 1.6rem;
+  margin-bottom: 0.6rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $ldc-navy-dark;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+body.about-page .about-photo-card {
+  align-self: flex-start;
+  max-width: 360px;
+  margin: 0 auto;
+  background: transparent;
+  border-radius: 18px;
+  padding: 0;
+  box-shadow: none;
+}
+
+body.about-page .about-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+body.about-page .about-text .about-cta {
+  display: inline-block;
+  margin-top: 1.75rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  body.about-page .about-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+
+  body.about-page .about-text {
+    flex: 0 1 60%;
+    max-width: 620px;
+  }
+
+  body.about-page .about-photo-card {
+    flex: 0 0 340px;
+    margin: 4rem 0 0;  // add this
+  }
+}
+
+/* ==========================================================================
+   CONTACT PAGE LAYOUT
+   ========================================================================== */
+
+body.contact-page #title-block-header {
+  display: none !important;
+}
+
+body.contact-page .contact-back-link {
+  display: inline-block;
+  margin: 1.5rem 0 0.75rem;
+  font-size: 0.9rem;
+  color: $ldc-navy;
+  text-decoration: none;
+}
+
+body.contact-page .contact-back-link:hover,
+body.contact-page .contact-back-link:focus {
+  text-decoration: underline;
+}
+
+body.contact-page .contact-container {
+  max-width: 1150px;
+  margin: 0 auto 3rem;
+  padding: 0 clamp(1.5rem, 4vw, 3rem) 3rem;
+}
+
+body.contact-page .contact-header h2 {
+  margin-top: 0;
+  font-size: clamp(2.1rem, 3vw, 2.8rem);
+  font-weight: 700;
+  color: $ldc-navy;
+}
+
+body.contact-page .contact-header p {
+  margin-bottom: 1.25rem;
+}
+
+body.contact-page .contact-header ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 2rem;
+}
+
+body.contact-page .contact-header li {
+  margin-bottom: 0.5rem;
+}
+
+body.contact-page .contact-header i {
+  margin-right: 0.4rem;
+  color: $ldc-navy-dark;
+}
+
+body.contact-page .contact-form-card {
+  margin-top: 1.5rem;
+  padding: 1.75rem 1.5rem 2rem;
+  background-color: rgba(255, 255, 255, 0.92);
+  border-radius: 18px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+}
+
+body.contact-page .contact-form-card h3 {
+  margin-bottom: 1.25rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: $ldc-navy-dark;
+}
+
+body.contact-page .contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+body.contact-page .contact-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+body.contact-page .contact-field {
+  flex: 1 1 0;
+}
+
+body.contact-page .contact-field.full-width {
+  width: 100%;
+}
+
+body.contact-page .contact-field label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+body.contact-page .contact-field input,
+body.contact-page .contact-field select,
+body.contact-page .contact-field textarea {
+  width: 100%;
+  border: 1px solid $ldc-navy-dark;
+  border-radius: 6px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.95rem;
+  background-color: rgba(255, 255, 255, 0.96);
+}
+
+body.contact-page .contact-field textarea {
+  resize: vertical;
+}
+
+body.contact-page .contact-submit {
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  body.contact-page .contact-row {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 992px) {
+  body.contact-page .contact-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.6fr);
+    column-gap: 3rem;
+    align-items: flex-start;
+  }
+
+  body.contact-page .contact-header {
+    max-width: 460px;
+  }
+
+  body.contact-page .contact-form-card {
+    margin-top: 0.5rem;
+  }
+}
