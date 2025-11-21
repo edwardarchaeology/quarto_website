@@ -41,12 +41,8 @@ format:
     smooth-scroll: true
     toc: false
     theme:
-      light:
-        - cosmo
-        - assets/scripts/custom.scss
-      dark:
-        - cosmo
-        - assets/scripts/custom.scss
+      - cosmo
+      - assets/scripts/custom.scss
     includes:
       after-body: assets/scripts/fit-title.html
     page-layout: full
