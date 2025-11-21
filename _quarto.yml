@@ -10,6 +10,7 @@ project:
 website:
   title: "Leland Data Consulting"
   site-url: https://edwardarchaeology.github.io
+  favicon: assets/img/favicon.png
   navbar:
     logo: "assets/img/logo.png"
     left:
