@@ -1,15 +1,26 @@
 ---
-title: "Portfolio"
-subtitle: "[Datacamp certifications/projects](https://www.datacamp.com/portfolio/edwardarchaeology)<br>[Selected presentations](project_writeups/presentations.qmd)"
+title: ""
 page-layout: full
 format:
   html:
+    title-block: false
     body-classes: portfolio-page
 ---
 
-I build practical, end-to-end data and geospatial solutions – from scrapers and ETL pipelines, to interactive apps, dashboards, and research workflows. Below is a selection of projects, reorganized from my original portfolio into two groups: **Interactive apps & tools** and **Research & methods**.
-
----
+```{=html}
+<div class="portfolio-header">
+  <div class="portfolio-header-top">
+    <div class="portfolio-title">Portfolio</div>
+    <div class="portfolio-links">
+      <a href="https://www.datacamp.com/portfolio/edwardarchaeology">Datacamp certifications/projects</a>
+      <a href="project_writeups/presentations.qmd">Selected presentations</a>
+    </div>
+  </div>
+  <p class="portfolio-intro">
+    I build practical, end-to-end data and geospatial solutions – from scrapers and ETL pipelines, to interactive apps, dashboards, and research workflows. Below is a selection of projects, organized into two groups: <strong>Interactive apps &amp; tools</strong> and <strong>Research &amp; methods</strong>.
+  </p>
+</div>
+```
 
 <h2>Interactive apps &amp; tools</h2>
 

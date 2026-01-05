@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Wave Text Field (No-Reflection Moat)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body {
+      background: #0f1218;
+      display: grid;
+      place-items: center;
+      font-family: Quicksand, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    .wrap { width: min(1200px, 92vw); }
+    .hero {
+      position: relative;
+      width: 100%;
+      height: clamp(420px, 62vh, 520px);
+      background: radial-gradient(1200px 520px at 50% 50%, #0b0c10 0%, #07080c 70%, #05060a 100%);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    }
+    canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .hint {
+      color: rgba(255,255,255,0.65);
+      font-size: 14px;
+      margin: 14px 6px 0;
+      letter-spacing: 0.2px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="hero" aria-hidden="true">
+      <canvas id="c"></canvas>
+    </div>
+    <div class="hint">Move your mouse through the field.</div>
+  </div>
+
+<script>
+(() => {
+  const canvas = document.getElementById("c");
+  const ctx = canvas.getContext("2d", { alpha: true, desynchronized: true });
+
+  // -------------------
+  // CONTENT / BRAND
+  // -------------------
+  const TEXT = "Decoding Data. Defining Tomorrow.";
+  const FONT_FAMILY = "Quicksand, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif";
+
+  // -------------------
+  // PERFORMANCE / RESOLUTION
+  // -------------------
+  const DPR_CAP = 2;
+  const FPS_LIMIT = 60;
+  const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // -------------------
+  // DOT FIELD
+  // -------------------
+  const BG_SPACING = 11;
+  const BG_JITTER = 0.9;
+  const TEXT_SAMPLE_STEP = 2;
+  const TEXT_JITTER = 0.45;
+
+  // Responsive sampling (set in resize)
+  let isMobile = false;
+  let bgSpacing = BG_SPACING;
+  let textStep = TEXT_SAMPLE_STEP;
+
+  const DOT_R = 0.65;
+  const BG_ALPHA = 0.22;
+  const TEXT_ALPHA = 0.85;
+  const LIT_ALPHA = 0.95;
+
+  // -------------------
+  // PARTICLE PHYSICS
+  // -------------------
+  const RETURN_BG = 0.040;
+  const RETURN_TEXT = 0.014;
+  const DAMPING = 0.86;
+  const MAX_SPEED = 2.8;
+
+  // -------------------
+  // MOUSE SOLID DISK
+  // -------------------
+  const MOUSE_RADIUS = 2;
+  const MOUSE_PUSH = 1.05;
+  const MOUSE_SOFT = 0.92;
+  const WAVE_MOUSE_IMPULSE = .1; // 0.8–2.2 (strength)
+
+  // -------------------
+  // HEAT
+  // -------------------
+  const HEAT_DECAY = 0.5;
+
+  // -------------------
+  // MASK RENDERING
+  // -------------------
+  const MASK_BLUR = 0;
+  const MASK_THRESHOLD = 0.55;
+
+  // -------------------
+  // WAVE GRID (u + v velocity formulation)
+  // -------------------
+  const WAVE_GRID_SCALE = 3;  // higher = coarser/faster
+  const WAVE_PAD = 140;         // bigger moat = less chance any energy reaches true boundary
+  const WAVE_C = 0.6;          // wave speed in grid units per step (stable < ~0.7)
+
+  // Damping inside visible region (small), and strong in the moat via sigma ramp
+const WAVE_DAMP_INNER = 0.00055;  // tiny energy loss inside visible area
+  const WAVE_SIGMA_MAX  = 0.55;      // moat "black hole" strength (0.35–0.75)
+  const WAVE_SIGMA_POW  = 4;         // ramp curve (4–6 is smooth)
+
+  // Optional: kills micro-ringing / numeric high-freq junk
+  const WAVE_VISC = 0.02;            // 0–0.10
+
+  // Injection + coupling
+  const PULSE_HZ = 0.10;
+  const PULSE_INTERVAL = 1 / PULSE_HZ;
+
+  const WAVE_MOUSE_INJECT = 1.8;     // visible mouse disturbance
+  const WAVE_PULSE_INJECT = 3.2;     // base pulse energy (burst makes it travel)
+  const BURST_FRAMES = 24;
+
+  const WAVE_FORCE = 2200;           // converts wave gradient into dot motion
+  const WAVE_HEAT  = 0.16;           // converts wave amplitude into brightness
+
+  const WAVE_FORCE_TEXT = 0.14;
+  const WAVE_FORCE_BG   = 0.46;
+  const WAVE_FORCE_FIRST = 0.00;     // IMPORTANT: make the first letter rigid (stops “D blows up”)
+  const WAVE_GRAD_CLAMP = 0.055;
+
+  // -------------------
+  // STATE
+  // -------------------
+  let w = 0, h = 0, dpr = 1;
+  let lastT = performance.now();
+  let acc = 0;
+
+  let bg = [];
+  let textPts = [];
+  let all = [];
+
+  let mouse = { x: -1e9, y: -1e9, px: -1e9, py: -1e9, active: false };
+
+  const maskCanvas = document.createElement("canvas");
+  const mctx = maskCanvas.getContext("2d", { willReadFrequently: true });
+  let maskData = null;
+  let firstMaskData = null;
+
+  let layout = {
+    fontSize: 48,
+    xStart: 0,
+    yMid: 0,
+    firstCenter: { x: 0, y: 0 }
+  };
+
+  let firstEdgePts = [];
+
+  // wave grid
+  let gw = 0, gh = 0;
+  let gScale = 1;
+  let u = null;   // displacement/height
+  let v = null;   // velocity
+  let u2 = null;  // scratch
+  let sigma = null; // damping mask (PML)
+  let nextPulseT = 0;
+  let pulseBurst = 0;
+
+  let running = true;
+  document.addEventListener("visibilitychange", () => {
+    running = !document.hidden;
+    if (running) {
+      lastT = performance.now();
+      requestAnimationFrame(loop);
+    }
+  });
+
+  const container = canvas.parentElement;
+  container.addEventListener("pointermove", (e) => {
+    const r = container.getBoundingClientRect();
+    mouse.x = e.clientX - r.left;
+    mouse.y = e.clientY - r.top;
+    mouse.active = true;
+  }, { passive: true });
+
+  container.addEventListener("pointerleave", () => {
+    mouse.active = false;
+    mouse.x = -1e9; mouse.y = -1e9;
+  }, { passive: true });
+
+  const ro = new ResizeObserver(() => resize());
+  ro.observe(container);
+
+  // -------------------
+  // WAVE: grid mapping
+  // -------------------
+  function innerDims() {
+    return {
+      innerW: gw - 2 * WAVE_PAD,
+      innerH: gh - 2 * WAVE_PAD
+    };
+  }
+
+  function waveIndex(x, y) {
+    const { innerW, innerH } = innerDims();
+    const gx = (WAVE_PAD + clamp((x / w) * innerW, 1, innerW - 2)) | 0;
+    const gy = (WAVE_PAD + clamp((y / h) * innerH, 1, innerH - 2)) | 0;
+    return gy * gw + gx;
+  }
+
+  function injectWave(x, y, amp) {
+    const i = waveIndex(x, y);
+    const ix = i % gw, iy = (i / gw) | 0;
+    for (let oy = -1; oy <= 1; oy++) {
+      for (let ox = -1; ox <= 1; ox++) {
+        const wgt = (ox === 0 && oy === 0) ? 1.0 : 0.55;
+        u[(iy + oy) * gw + (ix + ox)] += amp * wgt;
+      }
+    }
+  }
+
+  function sampleWaveAndGrad(x, y) {
+    const i = waveIndex(x, y);
+    const uu = u[i];
+    const dux = (u[i + 1] - u[i - 1]) * 0.5;
+    const duy = (u[i + gw] - u[i - gw]) * 0.5;
+    const inv = 1 / Math.max(1e-6, gScale);
+    return { u: uu, gx: dux * inv, gy: duy * inv };
+  }
+
+  // -------------------
+  // WAVE: resize + sigma (PML)
+  // -------------------
+  function waveResize() {
+    gScale = WAVE_GRID_SCALE * Math.min(2, dpr);
+
+    const innerW = Math.max(32, (w / gScale) | 0);
+    const innerH = Math.max(32, (h / gScale) | 0);
+    gw = innerW + 2 * WAVE_PAD;
+    gh = innerH + 2 * WAVE_PAD;
+
+    u = new Float32Array(gw * gh);
+    v = new Float32Array(gw * gh);
+    u2 = new Float32Array(gw * gh);
+    sigma = new Float32Array(gw * gh);
+
+    const innerX0 = WAVE_PAD;
+    const innerY0 = WAVE_PAD;
+    const innerX1 = gw - WAVE_PAD - 1;
+    const innerY1 = gh - WAVE_PAD - 1;
+
+    // sigma = 0 in inner region, ramps up smoothly in moat
+    for (let y = 0; y < gh; y++) {
+      for (let x = 0; x < gw; x++) {
+        const i = y * gw + x;
+
+        const inInner = (x >= innerX0 && x <= innerX1 && y >= innerY0 && y <= innerY1);
+        if (inInner) {
+          sigma[i] = WAVE_DAMP_INNER;
+          continue;
+        }
+
+        // distance into moat from inner boundary (0..WAVE_PAD)
+        const dx = (x < innerX0) ? (innerX0 - x) : (x > innerX1 ? (x - innerX1) : 0);
+        const dy = (y < innerY0) ? (innerY0 - y) : (y > innerY1 ? (y - innerY1) : 0);
+        const d = Math.max(dx, dy);
+        const t = clamp(d / WAVE_PAD, 0, 1);
+        const s = Math.pow(t, WAVE_SIGMA_POW);
+        sigma[i] = WAVE_DAMP_INNER + WAVE_SIGMA_MAX * s;
+      }
+    }
+  }
+
+
+
+  function injectVelDisk(x, y, impulse, radPx) {
+  const { innerW, innerH } = innerDims();
+  const gx0 = (WAVE_PAD + clamp((x / w) * innerW, 1, innerW - 2)) | 0;
+  const gy0 = (WAVE_PAD + clamp((y / h) * innerH, 1, innerH - 2)) | 0;
+
+  const r = Math.max(1, (radPx / gScale) | 0);
+  const r2 = r * r;
+
+  for (let oy = -r; oy <= r; oy++) {
+    const gy = gy0 + oy;
+    if (gy <= 0 || gy >= gh - 1) continue;
+    for (let ox = -r; ox <= r; ox++) {
+      const gx = gx0 + ox;
+      if (gx <= 0 || gx >= gw - 1) continue;
+
+      const d2 = ox * ox + oy * oy;
+      if (d2 > r2) continue;
+
+      const t = 1 - d2 / (r2 + 1e-6);
+      const wgt = t * t; // smooth
+      v[gy * gw + gx] += impulse * wgt;
+    }
+  }
+}
+
+  function injectWaveDisk(x, y, amp, radPx) {
+  const { innerW, innerH } = innerDims();
+  const gx0 = (WAVE_PAD + clamp((x / w) * innerW, 1, innerW - 2)) | 0;
+  const gy0 = (WAVE_PAD + clamp((y / h) * innerH, 1, innerH - 2)) | 0;
+
+  const r = Math.max(1, (radPx / gScale) | 0);
+  const r2 = r * r;
+
+  for (let oy = -r; oy <= r; oy++) {
+    const gy = gy0 + oy;
+    if (gy <= 0 || gy >= gh - 1) continue;
+    for (let ox = -r; ox <= r; ox++) {
+      const gx = gx0 + ox;
+      if (gx <= 0 || gx >= gw - 1) continue;
+      const d2 = ox * ox + oy * oy;
+      if (d2 > r2) continue;
+
+      // smooth radial weight
+      const t = 1 - d2 / (r2 + 1e-6);
+      const wgt = t * t;
+      u[gy * gw + gx] += amp * wgt;
+    }
+  }
+}
+  // -------------------
+  // WAVE: step (u+v, sigma PML)
+  // -------------------
+  function waveStep() {
+    const c2 = WAVE_C * WAVE_C;
+
+    // update interior (skip outermost ring; moat is huge anyway)
+    for (let y = 1; y < gh - 1; y++) {
+      const row = y * gw;
+      for (let x = 1; x < gw - 1; x++) {
+        const i = row + x;
+
+        // laplacian of u
+        const lap =
+          u[i - 1] + u[i + 1] + u[i - gw] + u[i + gw] - 4 * u[i];
+
+        // velocity update with damping (sigma)
+        // v = (v + c2*lap) * (1 - sigma)
+        const sig = sigma[i];
+        const dv = (c2 * lap);
+        v[i] = (v[i] + dv) * (1 - sig);
+
+        // integrate displacement
+        u2[i] = u[i] + v[i];
+
+        // tiny viscosity: damp high-frequency junk via laplacian
+        u2[i] += WAVE_VISC * lap;
+      }
+    }
+
+    // swap u buffers
+    const tmp = u; u = u2; u2 = tmp;
+
+    // keep outermost ring quiet (far beyond visible due to moat)
+    for (let x = 0; x < gw; x++) {
+      u[x] = 0;
+      u[(gh - 1) * gw + x] = 0;
+      v[x] = 0;
+      v[(gh - 1) * gw + x] = 0;
+    }
+    for (let y = 0; y < gh; y++) {
+      u[y * gw] = 0;
+      u[y * gw + (gw - 1)] = 0;
+      v[y * gw] = 0;
+      v[y * gw + (gw - 1)] = 0;
+    }
+  }
+
+  // -------------------
+  // TEXT MASKS / POINTS
+  // -------------------
+  function sample(data, x, y) {
+    const ix = clamp(x | 0, 0, w - 1);
+    const iy = clamp(y | 0, 0, h - 1);
+    const idx = (iy * w + ix) * 4;
+    return data ? data[idx] / 255 : 0;
+  }
+
+  function ink(v, edge = 0.60, gamma = 1.6) {
+    const g = Math.pow(v, gamma);
+    return g >= edge ? 1 : 0;
+  }
+
+  function buildFirstEdgePoints() {
+    firstEdgePts = [];
+    if (!firstMaskData) return;
+
+    const step = 2;
+    const inThr = 0.62;
+    const gamma = 1.8;
+    const edgeNeed = 1;
+
+    let x0 = w, y0 = h, x1 = 0, y1 = 0;
+    for (let y = 0; y < h; y += 6) {
+      for (let x = 0; x < w; x += 6) {
+        if (ink(sample(firstMaskData, x, y), inThr, gamma)) {
+          if (x < x0) x0 = x; if (x > x1) x1 = x;
+          if (y < y0) y0 = y; if (y > y1) y1 = y;
+        }
+      }
+    }
+    if (x1 <= x0 || y1 <= y0) return;
+    x0 = Math.max(1, x0 - 12); y0 = Math.max(1, y0 - 12);
+    x1 = Math.min(w - 2, x1 + 12); y1 = Math.min(h - 2, y1 + 12);
+
+    for (let y = y0; y <= y1; y += step) {
+      for (let x = x0; x <= x1; x += step) {
+        const inside = ink(sample(firstMaskData, x, y), inThr, gamma);
+        if (!inside) continue;
+
+        let outside = 0;
+        outside += 1 - ink(sample(firstMaskData, x + step, y), inThr, gamma);
+        outside += 1 - ink(sample(firstMaskData, x - step, y), inThr, gamma);
+        outside += 1 - ink(sample(firstMaskData, x, y + step), inThr, gamma);
+        outside += 1 - ink(sample(firstMaskData, x, y - step), inThr, gamma);
+
+        if (outside >= edgeNeed) firstEdgePts.push({ x, y });
+      }
+    }
+  }
+
+  function buildMasks() {
+    mctx.clearRect(0, 0, w, h);
+
+    const pad = Math.min(w, h) * 0.08;
+    const maxWidth = w - pad * 2;
+
+    // Mobile: split into 2 lines for legibility
+    const lines = isMobile
+      ? ["Decoding Data.", "Defining Tomorrow."]
+      : [TEXT];
+
+    // Font size based on height (not width), with a hard minimum on mobile
+    let fontSize = Math.floor(clamp(h * (isMobile ? 0.15 : 0.12), 30, 110));
+
+    mctx.textAlign = "center";
+    mctx.textBaseline = "middle";
+    mctx.imageSmoothingEnabled = false;
+
+    // Fit to width using the widest line
+    for (let i = 0; i < 18; i++) {
+      mctx.font = `700 ${fontSize}px ${FONT_FAMILY}`;
+      const widest = Math.max(...lines.map(s => mctx.measureText(s).width));
+      if (widest <= maxWidth) break;
+      fontSize = Math.floor(fontSize * 0.93);
+    }
+
+    layout.fontSize = fontSize;
+
+    const cx = w * 0.5;
+    const lineGap = fontSize * 1.18;
+    const yMid = h * 0.50;
+    const y0 = yMid - (lines.length - 1) * 0.5 * lineGap;
+
+    // Width of widest line for sampling box
+    mctx.font = `700 ${fontSize}px ${FONT_FAMILY}`;
+    const widest = Math.max(...lines.map(s => mctx.measureText(s).width));
+    const boxPad = fontSize * 0.30;
+
+    // For "D" boundary injection: always reference the first char of line 1
+    const firstLine = lines[0];
+    const firstChar = firstLine.trim().slice(0, 1) || "D";
+
+    // Compute left start of line 1 (for firstChar x)
+    const line1W = mctx.measureText(firstLine).width;
+    const xStart1 = cx - line1W * 0.5;
+
+    // Save layout info used elsewhere
+    layout.xStart = xStart1;
+    layout.yMid = yMid;
+
+    const firstWidth = mctx.measureText(firstChar).width;
+    layout.firstCenter = { x: xStart1 + firstWidth * 0.55, y: y0 };
+
+    // sampling box for text points
+    layout._box = {
+      x0: Math.max(0, Math.floor(cx - widest * 0.5 - boxPad)),
+      x1: Math.min(w, Math.ceil (cx + widest * 0.5 + boxPad)),
+      y0: Math.max(0, Math.floor(y0 - fontSize * 0.95 - boxPad)),
+      y1: Math.min(h, Math.ceil (y0 + (lines.length - 1) * lineGap + fontSize * 0.95 + boxPad))
+    };
+
+    // --- full text mask ---
+    mctx.fillStyle = "black";
+    mctx.fillRect(0, 0, w, h);
+    mctx.save();
+    mctx.filter = MASK_BLUR ? `blur(${MASK_BLUR}px)` : "none";
+    mctx.fillStyle = "white";
+    for (let i = 0; i < lines.length; i++) {
+      mctx.fillText(lines[i], cx, y0 + i * lineGap);
+    }
+    mctx.restore();
+    maskData = mctx.getImageData(0, 0, w, h).data;
+
+    // --- first letter mask (line 1 only) ---
+    mctx.clearRect(0, 0, w, h);
+    mctx.fillStyle = "black";
+    mctx.fillRect(0, 0, w, h);
+    mctx.save();
+    mctx.filter = "none";
+    mctx.fillStyle = "white";
+    mctx.textAlign = "center";
+    mctx.textBaseline = "middle";
+    // draw first char centered at its measured position
+    mctx.fillText(firstChar, xStart1 + firstWidth * 0.5, y0);
+    mctx.restore();
+    firstMaskData = mctx.getImageData(0, 0, w, h).data;
+
+    buildFirstEdgePoints();
+  }
+
+  function makePoint(rx, ry, isText) {
+    const k = isText ? RETURN_TEXT : RETURN_BG;
+    return {
+      x: rx, y: ry,
+      rx, ry,
+      vx: 0, vy: 0,
+      k,
+      isText,
+      inFirst: false,
+      heat: isText ? 0.22 : 0.06
+    };
+  }
+
+  function buildPoints() {
+    bg = [];
+    textPts = [];
+    all = [];
+
+    const rand = (seed => () => (seed = (seed * 16807) % 2147483647) / 2147483647)(1337);
+
+    for (let y = bgSpacing / 2; y < h; y += bgSpacing) {
+      for (let x = bgSpacing / 2; x < w; x += bgSpacing) {
+        const rx = x + (rand() - 0.5) * 2 * BG_JITTER;
+        const ry = y + (rand() - 0.5) * 2 * BG_JITTER;
+        const p = makePoint(rx, ry, false);
+        bg.push(p);
+        all.push(p);
+      }
+    }
+
+// Use the precomputed bounding box from buildMasks() (covers BOTH mobile lines)
+const b = layout._box || { x0: 0, y0: 0, x1: w, y1: h };
+
+// Optional: add a little extra padding to avoid any edge clipping on small screens
+const extra = Math.ceil(layout.fontSize * 0.18);
+
+const boxX0 = Math.max(0, b.x0 - extra);
+const boxX1 = Math.min(w, b.x1 + extra);
+const boxY0 = Math.max(0, b.y0 - extra);
+const boxY1 = Math.min(h, b.y1 + extra);
+
+    for (let y = boxY0; y < boxY1; y += textStep) {
+      for (let x = boxX0; x < boxX1; x += textStep) {
+        const rx = x + (rand() - 0.5) * 2 * TEXT_JITTER;
+        const ry = y + (rand() - 0.5) * 2 * TEXT_JITTER;
+
+        const m = ink(sample(maskData, rx, ry), 0.62, 1.8);
+        if (!m) continue;
+        if (m < MASK_THRESHOLD) continue;
+
+        const p = makePoint(rx, ry, true);
+        p.inFirst = ink(sample(firstMaskData, rx, ry), 0.62, 1.8) === 1;
+        textPts.push(p);
+        all.push(p);
+      }
+    }
+  }
+
+  // -------------------
+  // STEP / DRAW
+  // -------------------
+  function smoothPow(u, softness) {
+    const s = clamp(u, 0, 1);
+    const exp = 1 + (1 - softness) * 3;
+    return Math.pow(s, exp) * (3 - 2 * s);
+  }
+
+  function step(dt, t) {
+  // -----------------------------
+  // Mouse velocity
+  // -----------------------------
+  const mx = mouse.x, my = mouse.y;
+  const mvx = (mx - mouse.px) / Math.max(dt, 1e-4);
+  const mvy = (my - mouse.py) / Math.max(dt, 1e-4);
+  mouse.px = mx; mouse.py = my;
+
+  const time = t * 0.001;
+
+  // -----------------------------
+  // Pulse timing: start burst (catch-up safe, no stacking)
+  // -----------------------------
+  if (time >= nextPulseT) {
+    const missed = Math.floor((time - nextPulseT) / PULSE_INTERVAL) + 1;
+    nextPulseT += missed * PULSE_INTERVAL;
+    pulseBurst = BURST_FRAMES;
+  }
+
+  // -----------------------------
+  // Burst injection: once per frame
+  // -----------------------------
+  if (pulseBurst > 0) {
+    if (firstEdgePts.length) {
+      const K = Math.min(firstEdgePts.length, 280);
+      const per = WAVE_PULSE_INJECT / K;
+
+      for (let k = 0; k < K; k++) {
+        const pEdge = firstEdgePts[(Math.random() * firstEdgePts.length) | 0];
+        injectWaveDisk(pEdge.x, pEdge.y, per, 22); // 18–30 px
+      }
+    } else {
+      injectWave(layout.firstCenter.x, layout.firstCenter.y, WAVE_PULSE_INJECT);
+    }
+    pulseBurst--;
+  }
+
+  // -----------------------------
+  // Mouse wave injection (velocity impulse disk, bounded)
+  // -----------------------------
+  if (mouse.active) {
+    const speed = Math.hypot(mvx, mvy);
+
+    // speed -> impulse, saturating (strong but bounded)
+    const s = speed / 650;              // smaller = stronger response
+    const capped = (3.0 * s) / (1 + s); // <= 3.0
+
+    const impulse = WAVE_MOUSE_IMPULSE * capped;
+    injectVelDisk(mx, my, impulse, 34); // 26–46 px
+  }
+
+  // -----------------------------
+  // Advance wave sim
+  // -----------------------------
+  waveStep();
+
+  // -----------------------------
+  // Particles
+  // -----------------------------
+  const r = MOUSE_RADIUS;
+  const r2 = r * r;
+
+  // Size/FPS independent heat decay (half-life seconds)
+  const HEAT_HALF_LIFE = 0.05; // 0.25–0.6
+  const heatDecay = Math.exp(-Math.LN2 * dt / HEAT_HALF_LIFE);
+
+  for (let i = 0; i < all.length; i++) {
+    const p = all[i];
+
+    // spring to rest
+    p.vx += (p.rx - p.x) * p.k;
+    p.vy += (p.ry - p.y) * p.k;
+
+    // wave coupling sampled at REST position
+    const sW = sampleWaveAndGrad(p.rx, p.ry);
+
+    let gx = clamp(sW.gx, -WAVE_GRAD_CLAMP, WAVE_GRAD_CLAMP);
+    let gy = clamp(sW.gy, -WAVE_GRAD_CLAMP, WAVE_GRAD_CLAMP);
+
+    let wScale = p.isText ? WAVE_FORCE_TEXT : WAVE_FORCE_BG;
+    if (p.inFirst) wScale = WAVE_FORCE_FIRST; // make "D" rigid
+
+    p.vx += (-gx) * WAVE_FORCE * wScale * dt;
+    p.vy += (-gy) * WAVE_FORCE * wScale * dt;
+
+    // mouse collider impulse (solid disk)
+    if (mouse.active) {
+      const dx = p.x - mx;
+      const dy = p.y - my;
+      const d2 = dx * dx + dy * dy;
+
+      if (d2 < r2) {
+        const d = Math.sqrt(d2) + 1e-6;
+        const nx = dx / d, ny = dy / d;
+
+        const u = 1 - (d / r);
+        const fall = smoothPow(u, MOUSE_SOFT);
+
+        const moveMag = Math.min(1.6, Math.hypot(mvx, mvy) / 1200);
+        const push = MOUSE_PUSH * fall * (0.55 + 0.75 * moveMag);
+
+        const resist = p.isText ? 0.55 : 1.0;
+        p.vx += nx * push * resist;
+        p.vy += ny * push * resist;
+
+        // local heat from contact
+        p.heat = Math.min(1, p.heat + 0.25 * fall);
+      }
+    }
+
+    // damping
+    p.vx *= DAMPING;
+    p.vy *= DAMPING;
+
+    // speed cap
+    const sp2 = p.vx * p.vx + p.vy * p.vy;
+    const ms2 = MAX_SPEED * MAX_SPEED;
+    if (sp2 > ms2) {
+      const sp = Math.sqrt(sp2);
+      p.vx = (p.vx / sp) * MAX_SPEED;
+      p.vy = (p.vy / sp) * MAX_SPEED;
+    }
+
+    // integrate
+    p.x += p.vx;
+    p.y += p.vy;
+
+    // -----------------------------
+    // HEAT: monitor-size independent
+    // -----------------------------
+    p.heat *= heatDecay;
+
+    // wave heat (deadzone so tiny residual oscillations don't keep things lit)
+    const au = Math.abs(sW.u);
+    const u0 = 1.2; // 0.012–0.03
+    if (au > u0) {
+      p.heat = Math.min(1, p.heat + (au - u0) * WAVE_HEAT);
+    }
+
+    // motion glow normalized to spacing / font size (size-independent)
+    const disp = Math.hypot(p.x - p.rx, p.y - p.ry);
+    const denom = p.isText ? (layout.fontSize * 0.35) : BG_SPACING;
+    const norm = disp / Math.max(1e-6, denom);
+    p.heat = Math.min(1, p.heat + Math.min(0.06, norm * 0.035));
+
+    // extra cool-down when wave is quiet locally
+    if (au < 0.4) p.heat *= 0.92;
+  }
+
+  draw();
+}
+
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = `rgba(245,243,237,${BG_ALPHA})`;
+    ctx.beginPath();
+    for (let i = 0; i < bg.length; i++) {
+      const p = bg[i];
+      ctx.moveTo(p.x + DOT_R, p.y);
+      ctx.arc(p.x, p.y, DOT_R, 0, Math.PI * 2);
+    }
+    ctx.fill();
+
+    ctx.fillStyle = `rgba(245,243,237,${TEXT_ALPHA})`;
+    ctx.beginPath();
+    for (let i = 0; i < textPts.length; i++) {
+      const p = textPts[i];
+      ctx.moveTo(p.x + DOT_R, p.y);
+      ctx.arc(p.x, p.y, DOT_R, 0, Math.PI * 2);
+    }
+    ctx.fill();
+
+    ctx.fillStyle = `rgba(255,252,245,${LIT_ALPHA})`;
+    ctx.beginPath();
+    for (let i = 0; i < all.length; i++) {
+      const p = all[i];
+      if (p.heat < 0.55) continue;
+      ctx.moveTo(p.x + DOT_R, p.y);
+      ctx.arc(p.x, p.y, DOT_R, 0, Math.PI * 2);
+    }
+    ctx.fill();
+  }
+
+  // -------------------
+  // LOOP / RESIZE
+  // -------------------
+  function resize() {
+    const r = container.getBoundingClientRect();
+    w = Math.max(1, Math.floor(r.width));
+    h = Math.max(1, Math.floor(r.height));
+
+    // responsive (mobile)
+    isMobile = Math.min(w, h) < 520;
+    bgSpacing = isMobile ? 13 : BG_SPACING;
+    textStep  = isMobile ? 1 : TEXT_SAMPLE_STEP;
+    dpr = Math.min(DPR_CAP, window.devicePixelRatio || 1);
+
+    canvas.width = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    maskCanvas.width = w;
+    maskCanvas.height = h;
+
+    buildMasks();
+    buildPoints();
+    waveResize();
+
+    if (reduceMotion) {
+      for (const p of all) p.heat = p.isText ? 0.35 : 0.05;
+      draw();
+      return;
+    }
+
+    draw();
+  }
+
+  function loop(t) {
+    if (!running || reduceMotion) return;
+
+    const dt = Math.min(0.033, (t - lastT) / 1000);
+    lastT = t;
+
+    if (FPS_LIMIT > 0) {
+      const frame = 1 / FPS_LIMIT;
+      acc += dt;
+      if (acc < frame) { requestAnimationFrame(loop); return; }
+      step(frame, t);
+      acc -= frame;
+    } else {
+      step(dt, t);
+    }
+
+    requestAnimationFrame(loop);
+  }
+
+  function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+
+  // start
+  resize();
+  if (!reduceMotion) requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

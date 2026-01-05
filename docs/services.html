@@ -41,7 +41,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-71a1b302de0148a67db57e53ccdd7755.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-261ccd9bd13bf7e5cdcb27ad5e9881c1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -72,6 +72,7 @@ ul.task-list li input[type="checkbox"] {
 <style>html{ scroll-behavior: smooth; }</style>
 
 
+<link rel="stylesheet" href="assets/scripts/custom.scss">
 </head>
 
 <body class="nav-fixed services-page quarto-light">
@@ -167,11 +168,12 @@ ul.task-list li input[type="checkbox"] {
 
 
 <style>
-/* Page-local overrides so the services page sits on a readable card */
+/* Keep services page on the site background (no white card) */
 body.services-page main.content,
 body.services-page .page-content {
-    background: rgba(255,255,255,0.98) !important;
-    border-radius: 20px !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
     padding: 2rem 2.5rem !important;
     margin: 2rem auto !important;
     max-width: 1100px !important;
@@ -186,7 +188,7 @@ body.services-page h1.title {
     font-size: clamp(2.6rem, 3.4vw, 4rem);
     line-height: 1.05;
     font-weight: 700;
-    color: #3b3a6d; /* same as $ldc-navy in main stylesheet */
+    color: #E6E8EC;
 }
 
 section.services-grid {
