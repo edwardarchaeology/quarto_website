@@ -31,11 +31,13 @@ format:
 
 ![](assets/project_images/census_llm/census_llm.png){.project-thumb}
 
-**Tech:** Python · LLM · Agents · Docker  
+### Census LLM Agent (Analysts & Planners)
 
-### Census LLM Agent
+**Impact:** Enabled non-technical users to explore and extract insights from U.S. Census data using natural language requests, reducing the effort of crafting API queries and manual data pulls.
 
-An experimental large‑language‑model agent for exploring and querying U.S. Census data, combining natural‑language prompts with structured API calls. Containerized via Docker.
+**What it does:** Interactive Census query agent that translates natural language into structured API calls.
+
+**Tech:** Python · LLM agents · Docker
 
 [View code](https://github.com/edwardarchaeology/census-llm-agent){.btn .btn-primary .btn-sm}
 
@@ -48,11 +50,13 @@ An experimental large‑language‑model agent for exploring and querying U.S. C
 
 ![](assets/project_images/coastline/coast.png){.project-thumb}
 
-**Tech:** Python · Shiny · Geospatial · Satellite Imagery  
+### Coastal Change Detection App (Environmental Researchers & Planners)
 
-### Coastal Change Detection App
+**Impact:** Accelerated detection of shoreline change trends by providing an interactive platform for visual comparison of satellite imagery, cutting analysis time from hours to minutes.
 
-An easy, hands-on way for anyonem not just GIS or remote-sensing expert, to explore how coastlines change over time.  
+**What it does:** Coastal change explorer for interactive shoreline analysis.
+
+**Tech:** Python · Shiny · Remote sensing
 
 [View app](https://ecleland-coastal-change-detection-app.share.connect.posit.cloud){.btn .btn-primary .btn-sm}
 
@@ -66,11 +70,13 @@ An easy, hands-on way for anyonem not just GIS or remote-sensing expert, to expl
   <source src="assets/project_videos/whi_app.mp4" type="video/mp4">
 </video>
 
-**Tech:** R · Shiny · Geospatial  
+### Waffle House Index Geospatial App (Emergency Planners)
 
-### Waffle House Index Geospatial App
+**Impact:** Helped planners quickly identify areas with potential storm impact by enabling fast filtering and export of geospatial data, supporting more informed resource allocation decisions.
 
-A lightning-fast custom geospatial selection and export tool built on Waffle House locations as a proxy for storm impact and service resilience. Supports interactive filtering and one-click data export for planners.
+**What it does:** Storm impact & resilience tool for emergency planning.
+
+**Tech:** R · Shiny · Geospatial
 
 [View app](https://ecleland-waffle-house-index.share.connect.posit.cloud){.btn .btn-primary .btn-sm}
 
@@ -82,11 +88,13 @@ A lightning-fast custom geospatial selection and export tool built on Waffle Hou
 
 ![](assets/project_images/dwh_app.png){.project-thumb}
 
-**Tech:** R · Shiny · Remote sensing  
+### Deepwater Horizon Hexadecane App (Environmental Scientists)
 
-### Deepwater Horizon Hexadecane App
+**Impact:** Provided an intuitive interactive dashboard for exploring spatial and temporal concentration patterns from the Deepwater Horizon oil spill, improving communication of key insights.
 
-An interactive 3D geospatial app visualizing hexadecane concentrations from the Deepwater Horizon spill. Combines map-based exploration with histograms and temporal controls for scientific storytelling.
+**What it does:** Hexadecane visualization dashboard for environmental analysis.
+
+**Tech:** R · Shiny · 3D Geospatial visualization
 
 [View app](https://edwardarchaeology.shinyapps.io/deepwater-hexadecane/){.btn .btn-primary .btn-sm}
 
@@ -98,11 +106,13 @@ An interactive 3D geospatial app visualizing hexadecane concentrations from the 
 
 ![](assets/project_images/git_rag.png){.project-thumb}
 
-**Tech:** Python · RAG · Local-first AI  
+### Local RAG Ingestion Pipeline (Developers & Data Teams)
 
-### GitHub Repository RAG (CosmosDB + Ollama)
+**Impact:** Reduced effort required to convert large code repositories into searchable knowledge stores by building a local-first RAG pipeline, enabling faster retrieval and exploration of code content.
 
-A local-first Retrieval-Augmented Generation system that ingests large collections of GitHub repositories into Cosmos DB (emulator) and uses Ollama for embeddings and chat. Includes helpers to scrape, rank, and clone repos before ingest.
+**What it does:** Local RAG pipeline using CosmosDB and Ollama for code repository search.
+
+**Tech:** Python · RAG · Cosmos DB · Ollama
 
 [View code](https://github.com/edwardarchaeology/Repository-RAG){.btn .btn-primary .btn-sm}
 
@@ -132,11 +142,13 @@ A standalone Python executable that demonstrates Monte Carlo estimation of π in
 
 ![](assets/project_images/fbi_api.png){.project-thumb}
 
-**Tech:** Python · APIs · Automation  
+### FBI Crime Data Explorer API Bot (Data Analysts)
 
-### FBI Crime Data Explorer API Bot
+**Impact:** Automated large-batch requests to the FBI Crime Data Explorer API, eliminating manual splitting and restructuring of queries, enabling cleaner, faster data extraction for analysis.
 
-An asynchronous query bot that talks to the FBI Crime Data Explorer API, handles large request batches, and outputs structured results for downstream analysis.
+**What it does:** Automated FBI API query bot for bulk data extraction.
+
+**Tech:** Python · APIs · Automation
 
 [View code](https://github.com/edwardarchaeology/FBI_CDE_API_bot){.btn .btn-primary .btn-sm}
 
@@ -148,11 +160,13 @@ An asynchronous query bot that talks to the FBI Crime Data Explorer API, handles
 
 ![](assets/project_images/WHO_Death/WHO_DEATH.gif){.project-thumb}
 
-**Tech:** Tableau · Data viz  
+### WHO Mortality Dashboard (Public Health Analysts)
 
-### WHO Mortality Dashboard
+**Impact:** Transformed static WHO mortality data into an interactive dashboard with dynamic filters and calculated metrics, helping analysts uncover patterns and trends more efficiently than with static reports.
 
-A Tableau project converting a static WHO mortality analysis into a fully dynamic dashboard. Demonstrates calculated fields, parameter-driven views, and dynamic titles.
+**What it does:** Dynamic mortality analytics dashboard for public health insights.
+
+**Tech:** Tableau · Data visualization
 
 [View project](project_writeups/who-mortality-dashboard.qmd){.btn .btn-primary .btn-sm}
 
@@ -164,11 +178,13 @@ A Tableau project converting a static WHO mortality analysis into a fully dynami
 
 ![](assets/project_images/morphs/Ridge.png){.project-thumb}
 
-**Tech:** Python · QGIS  
+### Geomorphons Terrain Feature Processing (GIS Specialists)
 
-### Geomorphons Feature Processing
+**Impact:** Standardized generation and processing of geomorphon terrain features within QGIS, enabling reproducible landform classification workflows at scale.
 
-A standalone Python workflow that plugs into QGIS to generate and process geomorphon-based terrain features, making landform classification reproducible and scalable.
+**What it does:** Terrain feature workflow for automated geomorphon processing.
+
+**Tech:** Python · QGIS · Geoprocessing
 
 [View project](project_writeups/geomorphons-standalone.qmd){.btn .btn-primary .btn-sm}
 
@@ -205,11 +221,13 @@ A 2D chaos game rendered in three dimensions, used as a teaching and exploration
 
 ![](assets/project_images/kurd/EB_GBM_Map.png){.project-thumb}
 
-**Tech:** Machine learning · Archaeology  
+### Sampling Bias &amp; Environmental Correlation (Kurdistan)
 
-### Sampling Bias &amp; Environmental Correlation in Kurdistan
+**Impact:** Quantified and corrected for sampling bias in environmental predictors, improving reliability of archaeological predictive models for Northern Iraqi Kurdistan.
 
-A multi-model machine learning study (RF, GBM, MaxEnt) exploring sampling bias and environmental covariates in archaeological predictive mapping for Northern Iraqi Kurdistan.
+**What it does:** ML insights into archaeological sampling bias using RF, GBM, and MaxEnt.
+
+**Tech:** Machine learning · RF · GBM · MaxEnt
 
 [View project](project_writeups/kurdistan-sampling-bias.qmd){.btn .btn-primary .btn-sm}
 
@@ -221,11 +239,13 @@ A multi-model machine learning study (RF, GBM, MaxEnt) exploring sampling bias a
 
 ![](assets/project_images/flood_deep_learning/flood.png){.project-thumb}
 
-**Tech:** Deep learning · Flood risk  
+### Deep Learning for Flood Evaluation (Emergency Management)
 
-### Deep Learning for Flood Evaluation
+**Impact:** Enhanced flood extent detection and risk assessment by combining spatial data with deep learning models, improving situational awareness for planners.
 
-An application of deep learning to evaluate flood extent and risk, combining spatial data with neural networks to improve situational awareness.
+**What it does:** Flood risk evaluation using deep learning and remote sensing.
+
+**Tech:** Deep learning · Remote sensing
 
 [View project](https://arcg.is/1Gaayv){.btn .btn-primary .btn-sm}
 
@@ -237,11 +257,13 @@ An application of deep learning to evaluate flood extent and risk, combining spa
 
 ![](assets/project_images/Skulls/MALPACA.png){.project-thumb}
 
-**Tech:** 3D morphometrics  
+### Automated 3D Landmarking (Human Viscerocranium) (Analysts)
 
-### Auto-Landmarking of Human Viscerocranium
+**Impact:** Reduced manual landmark placement workload by applying automated techniques on 3D skull scans, supporting classification and shape analysis.
 
-Research on automating landmark placement on 3D skull scans, using morphometric techniques to support classification and pattern detection in cranial shape.
+**What it does:** Automated morphometric landmarking for 3D cranial analysis.
+
+**Tech:** 3D morphometrics
 
 [View project](project_writeups/autolandmarking-skulls.qmd){.btn .btn-primary .btn-sm}
 
@@ -253,11 +275,13 @@ Research on automating landmark placement on 3D skull scans, using morphometric 
 
 ![](assets/project_images/PCA/PC1_2.png){.project-thumb}
 
-**Tech:** Statistics · Data quality  
+### PCA for Visual Inspection of Missing Data (Analysts)
 
-### PCA for Visual Inspection of Missing Data
+**Impact:** Helped analysts visualize and understand missing data patterns using PCA, improving diagnosis of potential biases prior to modeling.
 
-Uses Principal Component Analysis to visualize and diagnose missing data patterns, helping analysts understand where data gaps might bias downstream models.
+**What it does:** Data quality visualization tool for missing data analysis.
+
+**Tech:** PCA · Data exploration
 
 [View project](project_writeups/pca-missing-data.qmd){.btn .btn-primary .btn-sm}
 
@@ -269,11 +293,13 @@ Uses Principal Component Analysis to visualize and diagnose missing data pattern
 
 ![](assets/project_images/ME_MAP.png){.project-thumb}
 
-**Tech:** Machine learning · Archaeology  
+### Machine Learning for Archaeological Geographic Data (Archaeologists)
 
-### Machine Learning for Archaeological Geographic Data
+**Impact:** Demonstrated an end-to-end pipeline for applying machine learning to geographic archaeological datasets, uncovering spatial influence of key covariates.
 
-An end-to-end example demonstrating how ML models can support archaeological research using geographic covariates.
+**What it does:** Geographic ML pipeline for archaeological research.
+
+**Tech:** Machine learning
 
 [View project](project_writeups/ml-archaeology-geo.qmd){.btn .btn-primary .btn-sm}
 
@@ -285,11 +311,13 @@ An end-to-end example demonstrating how ML models can support archaeological res
 
 ![](assets/project_images/models/AW.png){.project-thumb}
 
-**Tech:** Photogrammetry · 3D  
+### Structure-from-Motion 3D Photogrammetry (Scientists & Analysts)
 
-### Structure-from-Motion 3D Photogrammetry
+**Impact:** Delivered a complete photogrammetry workflow to generate detailed 3D models from photographs, useful for both scientific visualization and spatial analysis.
 
-Demonstrates a full SfM workflow to build 3D models from overlapping photographs, used in both archaeology and environmental analysis.
+**What it does:** 3D model generation workflow using photogrammetry.
+
+**Tech:** Photogrammetry · 3D modeling
 
 [View project](project_writeups/photogrammetry-3d.qmd){.btn .btn-primary .btn-sm}
 
