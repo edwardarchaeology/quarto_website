@@ -13,23 +13,30 @@ body-classes: about-page
 
 Hello and welcome!
 
-I'm **Edward Leland**, a New Orleans–based geospatial & data scientist
+I'm **Edward Leland**, a New Orleans, based geospatial & data scientist
 helping private teams turn messy data and satellite imagery into clear decisions.
 I build maps, models, and dashboards that answer questions like where to expand,
 how to reduce risk, and what's driving performance.
 Typical engagements include site selection & territory mapping, satellite-based
 monitoring, market/demand analysis, and executive KPIs and decision dashboards.
-Delivery is fast, visual, and actionable—so your team can move with confidence.
+Delivery is fast, visual, and actionable so your team can move with confidence.
 
 ### Approach:
 
-1. **Scope** – clarify decisions & data.  
-2. **Model** – pipeline construction, model development, and final analysis.  
-3. **Deliver** – decision-ready dashboards, applications, and briefs.
+1. **Scope** - clarify decisions & data.  
+2. **Model** - pipeline construction, model development, and final analysis.  
+3. **Deliver** - decision-ready dashboards, applications, and briefs.
 
-### Tooling:
+### Skills
 
-Python · R · SQL · Tableau/PowerBI · PostGIS · QGIS · GDAL · Google Earth Engine
+| Area | Skills |
+| --- | --- |
+| Programming & Querying | Python · R · SQL · JavaScript · C++ · HTML · CSS |
+| AI & Machine Learning | LLMs (RAG, agents) · prompt and context engineering · LangChain · PyTorch · scikit-learn · TensorFlow (basic) · tidymodels |
+| AI Infrastructure & DevOps | Docker · Git · GitHub Actions · Databricks · DuckDB · Ollama · CosmosDB · Power Automate · SharePoint |
+| Visualization & Decision Support | Tableau · Power BI · R Shiny · Streamlit · ggplot2 · matplotlib · seaborn |
+| Geospatial Analytics & Remote Sensing | ArcGIS Pro · QGIS · PostGIS · geopandas · sf · rasterio · Sentinel-2 & Landsat workflows |
+| Languages | English (Native) · French (A2) · Spanish (A1) · German (A1) |
 
 [Book a Free Consult](contact.qmd){.btn .btn-lilac .about-cta}
 
@@ -44,3 +51,6 @@ Python · R · SQL · Tableau/PowerBI · PostGIS · QGIS · GDAL · Google Earth
 </div>
 
 </div>
+
+
+

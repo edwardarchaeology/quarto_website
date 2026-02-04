@@ -219,6 +219,24 @@ A 2D chaos game rendered in three dimensions, used as a teaching and exploration
 
 <div class="project-card">
 
+![](https://raw.githubusercontent.com/edwardarchaeology/SAR_Segmentation_with_SAM3_UNET/main/sam3unet.jpg){.project-thumb}
+
+### SAM3SAR: Ship Segmentation in SAR (Research)
+
+**Impact:** Improved ship detection by adapting SAM3-UNet to SAR imagery and building a full workflow from dataset prep to inference on never-seen Sentinel-1 scenes.
+
+**What it does:** Segments ships in SAR imagery using a SAM3-UNet model, with training, evaluation, and tiled inference utilities.
+
+**Tech:** Python · PyTorch · SAM3 · UNet · Remote sensing
+
+[View code](https://github.com/edwardarchaeology/SAR_Segmentation_with_SAM3_UNET){.btn .btn-primary .btn-sm}
+
+[Deep learning]{.badge} [SAR]{.badge} [Remote sensing]{.badge}
+
+</div>
+
+<div class="project-card">
+
 ![](assets/project_images/kurd/EB_GBM_Map.png){.project-thumb}
 
 ### Sampling Bias &amp; Environmental Correlation (Kurdistan)

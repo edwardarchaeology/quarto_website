@@ -809,6 +809,14 @@ body.about-page #title-block-header {
   display: none !important;
 }
 
+body.about-page {
+  background:
+    linear-gradient(180deg, rgba(11, 13, 16, 0.82) 0%, rgba(11, 13, 16, 0.82) 100%),
+    url("assets/img/background.png") no-repeat center top fixed,
+    linear-gradient(180deg, $ldc-bg-section 0%, $ldc-bg 65%, $ldc-bg 100%);
+  background-size: cover;
+}
+
 body.about-page #quarto-content.quarto-container {
   max-width: none !important;
   padding-left: 0 !important;
@@ -862,6 +870,40 @@ body.about-page .about-text h3 {
   color: $ldc-text-primary;
   text-decoration: underline;
   text-underline-offset: 0.18em;
+}
+
+body.about-page .about-text table,
+body.about-page .about-text .table {
+  width: 100%;
+  margin: 0.75rem 0 1.5rem;
+  border-collapse: collapse;
+  background: transparent;
+  color: $ldc-text-secondary;
+  box-shadow: none;
+}
+
+body.about-page .about-text thead th,
+body.about-page .about-text .table thead th {
+  padding: 0.65rem 0.5rem;
+  text-align: left;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: $ldc-text-primary;
+  border-bottom: 1px solid $ldc-border;
+  background: transparent;
+}
+
+body.about-page .about-text tbody td,
+body.about-page .about-text .table tbody td {
+  padding: 0.7rem 0.5rem;
+  vertical-align: top;
+  border-bottom: 1px solid $ldc-border;
+  background: transparent;
+}
+
+body.about-page .about-text tbody tr:last-child td,
+body.about-page .about-text .table tbody tr:last-child td {
+  border-bottom: 0;
 }
 
 body.about-page .about-photo-card {
